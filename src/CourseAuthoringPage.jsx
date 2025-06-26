@@ -6,6 +6,8 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { StudioFooter } from '@edx/frontend-component-footer';
+import { getConfig } from '@edx/frontend-platform';
+import { LisanAI } from '@edunext/frontend-essentials';
 import Header from './header';
 import { fetchCourseDetail } from './data/thunks';
 import { useModel } from './generic/model-store';
@@ -68,6 +70,7 @@ const CourseAuthoringPage = ({ courseId, children }) => {
   }
   return (
     <div className={pathname.includes('/editor/') ? '' : 'bg-light-200'}>
+      {getConfig().LISAN_AI_ENABLED && (<LisanAI clientId={getConfig().LISAN_AI_CLIENT_ID} />)}
       {/* While V2 Editors are temporarily served from their own pages
       using url pattern containing /editor/,
       we shouldn't have the header and footer on these pages.
