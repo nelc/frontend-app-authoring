@@ -5,6 +5,7 @@ import { USER_ROLES } from '../../constants';
 
 const getApiBaseUrl = () => getConfig().STUDIO_BASE_URL;
 export const getCourseTeamApiUrl = (courseId) => `${getApiBaseUrl()}/api/contentstore/v1/course_team/${courseId}`;
+export const getCourseRunApiUrl = (courseId) => `${getApiBaseUrl()}/api/v1/course_runs/${courseId}/`;
 export const updateCourseTeamUserApiUrl = (courseId, email) => `${getApiBaseUrl()}/course_team/${courseId}/${email}`;
 
 /**
@@ -20,28 +21,36 @@ export async function getCourseTeam(courseId) {
 }
 
 /**
- * Get the current user's role for a course.
+ * Get the current user's role for a course using the course_runs API.
+ * This uses the existing /api/v1/course_runs/{course_id}/ endpoint.
  * @param {string} courseId
  * @returns {Promise<{ role: ('instructor'|'staff'|null) }>}
  */
 export async function getCourseUserRole(courseId) {
-  const { data } = await getAuthenticatedHttpClient()
-    .get(getCourseTeamApiUrl(courseId));
+  try {
+    const { data } = await getAuthenticatedHttpClient()
+      .get(getCourseRunApiUrl(courseId));
 
-  const camelCaseData = camelCaseObject(data);
-  const currentUser = getAuthenticatedUser();
-  const currentUserEmail = currentUser?.email;
-  const currentUsername = currentUser?.username;
+    const camelCaseData = camelCaseObject(data);
+    const currentUser = getAuthenticatedUser();
+    const currentUsername = currentUser?.username;
 
-  // Find the current user in the users array
-  const currentUserInTeam = camelCaseData?.users?.find(
-    (user) => user.email === currentUserEmail || user.username === currentUsername
-  );
+    // The course_runs API returns a 'team' array with user roles
+    const currentUserInTeam = camelCaseData?.team?.find(
+      (member) => member.user === currentUsername
+    );
 
-  // Return the role in the same format as before
-  return {
-    role: currentUserInTeam?.role || null,
-  };
+    // Return the role in the same format as before
+    return {
+      role: currentUserInTeam?.role || null,
+    };
+  } catch (error) {
+    // If there's an error (e.g., 404, 403), return null role
+    console.error('Error fetching user role from course_runs API:', error);
+    return {
+      role: null,
+    };
+  }
 }
 
 /**
