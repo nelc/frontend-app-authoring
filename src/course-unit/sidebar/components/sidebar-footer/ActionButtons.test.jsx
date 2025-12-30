@@ -16,6 +16,7 @@ import { fetchCourseSectionVerticalData } from '../../../data/thunk';
 import { courseSectionVerticalMock } from '../../../__mocks__';
 import messages from '../../messages';
 import ActionButtons from './ActionButtons';
+import { getCourseRunApiUrl } from '../../../../course-team/data/api';
 
 let store;
 let axiosMock;
@@ -38,6 +39,7 @@ describe('<ActionButtons />', () => {
       authenticatedUser: {
         userId: 3,
         username: 'abc123',
+        email: 'abc123@example.com',
         administrator: true,
         roles: [],
       },
@@ -53,6 +55,11 @@ describe('<ActionButtons />', () => {
           ...courseSectionVerticalMock.xblock_info,
           enable_copy_paste_units: true,
         },
+      });
+    axiosMock
+      .onGet(getCourseRunApiUrl('course-v1:edX+DemoX+Demo_Course'))
+      .reply(200, {
+        team: [{ user: 'abc123', role: 'instructor' }],
       });
     axiosMock
       .onPost(getClipboardUrl())
