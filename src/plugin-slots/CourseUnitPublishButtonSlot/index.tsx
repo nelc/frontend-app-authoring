@@ -21,7 +21,7 @@ const CourseUnitPublishButtonSlot = ({
     return null;
   }
 
-  const shouldHideByDefault = courseRole === 'staff' || courseRole === null;
+  const shouldHideButton = courseRole === 'staff';
 
   const defaultComponent = (
     <Button
@@ -29,7 +29,7 @@ const CourseUnitPublishButtonSlot = ({
       className="mt-3.5"
       variant="outline-primary"
       onClick={onPublish}
-      style={{ display: shouldHideByDefault ? 'none' : undefined }}
+      style={{ display: shouldHideButton ? 'none' : undefined }}
     >
       {publishButtonText}
     </Button>
