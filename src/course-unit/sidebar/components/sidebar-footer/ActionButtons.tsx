@@ -50,11 +50,11 @@ const ActionButtons = ({
   useEffect(() => {
     // Only needed when the Publish button will render.
     if (!(!published || hasChanges)) {
-      return;
+      return undefined;
     }
 
     if (!courseKey) {
-      return;
+      return undefined;
     }
 
     let cancelled = false;
