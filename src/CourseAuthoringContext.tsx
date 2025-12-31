@@ -26,7 +26,6 @@ type CourseAuthoringProviderProps = {
   courseId: string;
 };
 
-
 export const CourseAuthoringProvider = ({
   children,
   courseId,

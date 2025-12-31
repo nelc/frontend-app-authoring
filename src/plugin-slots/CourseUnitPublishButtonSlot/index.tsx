@@ -61,4 +61,3 @@ CourseUnitPublishButtonSlot.propTypes = {
 };
 
 export default CourseUnitPublishButtonSlot;
-

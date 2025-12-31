@@ -35,7 +35,7 @@ export async function getCourseUserRole(courseId) {
 
   // Find the current user in the users array
   const currentUserInTeam = camelCaseData?.users?.find(
-    (user) => user.email === currentUserEmail || user.username === currentUsername
+    (user) => user.email === currentUserEmail || user.username === currentUsername,
   );
 
   // Return the role in the same format as before

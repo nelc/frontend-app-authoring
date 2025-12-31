@@ -62,10 +62,14 @@ const ActionButtons = ({
     (async () => {
       try {
         const { role } = await getCourseUserRole(courseKey) as any;
+        if (cancelled) {
+          return;
+        }
         setCourseRole(role);
-        if (cancelled) return;
       } catch (error: any) {
-        if (cancelled) return;
+        if (cancelled) {
+          return;
+        }
         setCourseRole(null);
       }
     })();
