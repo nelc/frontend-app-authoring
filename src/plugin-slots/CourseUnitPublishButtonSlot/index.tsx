@@ -20,7 +20,6 @@ const CourseUnitPublishButtonSlot = ({
   if (!(!published || hasChanges)) {
     return null;
   }
-  console.log('courseRole', courseRole);
   const shouldHideButton = courseRole === 'staff';
 
   const defaultComponent = (
