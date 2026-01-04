@@ -1,5 +1,5 @@
 import { camelCaseObject, getConfig } from '@edx/frontend-platform';
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { getAuthenticatedHttpClient, getAuthenticatedUser } from '@edx/frontend-platform/auth';
 
 import { USER_ROLES } from '../../constants';
 
@@ -17,6 +17,31 @@ export async function getCourseTeam(courseId) {
     .get(getCourseTeamApiUrl(courseId));
 
   return camelCaseObject(data);
+}
+
+/**
+ * Get the current user's role for a course.
+ * @param {string} courseId
+ * @returns {Promise<{ role: ('instructor'|'staff'|null) }>}
+ */
+export async function getCourseUserRole(courseId) {
+  const { data } = await getAuthenticatedHttpClient()
+    .get(getCourseTeamApiUrl(courseId));
+
+  const camelCaseData = camelCaseObject(data);
+  const currentUser = getAuthenticatedUser();
+  const currentUserEmail = currentUser?.email;
+  const currentUsername = currentUser?.username;
+
+  // Find the current user in the users array
+  const currentUserInTeam = camelCaseData?.users?.find(
+    (user) => user.email === currentUserEmail || user.username === currentUsername,
+  );
+
+  // Return the role in the same format as before
+  return {
+    role: currentUserInTeam?.role || null,
+  };
 }
 
 /**

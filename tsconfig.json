@@ -11,6 +11,7 @@
     },
     "include": [
       "*.js",
+      "*.jsx",
       ".eslintrc.js",
       "src/**/*",
       "plugins/**/*"
