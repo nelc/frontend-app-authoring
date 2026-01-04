@@ -28,6 +28,7 @@ const CourseUnitPublishButtonSlot = ({
       className="mt-3.5"
       variant="outline-primary"
       onClick={onPublish}
+      data-testid="course-unit-publish-button"
       style={{ display: shouldHideButton ? 'none' : undefined }}
     >
       {publishButtonText}
