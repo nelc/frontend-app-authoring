@@ -925,6 +925,15 @@ describe('<CourseUnit />', () => {
 
     await user.click(videoButton);
 
+    // Wait for the video modal to appear
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: /add video to your course/i, hidden: true })).toBeInTheDocument();
+    });
+
+    // Close the modal by clicking the close button
+    const closeButtons = screen.getAllByRole('button', { name: 'Close' });
+    await user.click(closeButtons[closeButtons.length - 1]);
+
     axiosMock
       .onGet(getCourseSectionVerticalApiUrl(blockId))
       .reply(200, courseSectionVerticalMock);
@@ -932,7 +941,9 @@ describe('<CourseUnit />', () => {
     await executeThunk(editCourseUnitVisibilityAndData(blockId, PUBLISH_TYPES.makePublic, true), store.dispatch);
 
     // after creating video xblock, the sidebar status changes to Draft (unpublished changes)
-    expect(screen.getByText(sidebarMessages.sidebarTitleDraftUnpublishedChanges.defaultMessage)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(sidebarMessages.sidebarTitleDraftUnpublishedChanges.defaultMessage)).toBeInTheDocument();
+    });
     expect(screen.getByText(sidebarMessages.visibilityStaffAndLearnersTitle.defaultMessage)).toBeInTheDocument();
     expect(screen.getByText(sidebarMessages.releaseStatusTitle.defaultMessage)).toBeInTheDocument();
     expect(screen.getByText(sidebarMessages.sidebarBodyNote.defaultMessage)).toBeInTheDocument();
@@ -950,7 +961,6 @@ describe('<CourseUnit />', () => {
       sidebarMessages.releaseInfoWithSection.defaultMessage
         .replace('{sectionName}', courseSectionVerticalMock.xblock_info.release_date_from),
     )).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /add video to your course/i, hidden: true })).toBeInTheDocument();
     waffleSpy.mockRestore();
   });
 
@@ -1008,6 +1018,15 @@ describe('<CourseUnit />', () => {
     });
     */
 
+    // Wait for the video modal to appear
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: /upload or embed a new video/i, hidden: true })).toBeInTheDocument();
+    });
+
+    // Close the modal by clicking the close button
+    const closeButtons = screen.getAllByRole('button', { name: 'Close' });
+    await user.click(closeButtons[closeButtons.length - 1]);
+
     axiosMock
       .onGet(getCourseSectionVerticalApiUrl(blockId))
       .reply(200, courseSectionVerticalMock);
@@ -1015,7 +1034,9 @@ describe('<CourseUnit />', () => {
     await executeThunk(editCourseUnitVisibilityAndData(blockId, PUBLISH_TYPES.makePublic, true), store.dispatch);
 
     // after creating video xblock, the sidebar status changes to Draft (unpublished changes)
-    expect(screen.getByText(sidebarMessages.sidebarTitleDraftUnpublishedChanges.defaultMessage)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(sidebarMessages.sidebarTitleDraftUnpublishedChanges.defaultMessage)).toBeInTheDocument();
+    });
     expect(screen.getByText(sidebarMessages.visibilityStaffAndLearnersTitle.defaultMessage)).toBeInTheDocument();
     expect(screen.getByText(sidebarMessages.releaseStatusTitle.defaultMessage)).toBeInTheDocument();
     expect(screen.getByText(sidebarMessages.sidebarBodyNote.defaultMessage)).toBeInTheDocument();
