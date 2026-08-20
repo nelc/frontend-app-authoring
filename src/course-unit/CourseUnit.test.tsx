@@ -197,8 +197,6 @@ describe('<CourseUnit />', () => {
       .toBeInTheDocument();
     expect(await screen.findByRole('button', { name: headerNavigationsMessages.viewLiveButton.defaultMessage }))
       .toBeInTheDocument();
-    expect(await screen.findByRole('button', { name: headerNavigationsMessages.previewButton.defaultMessage }))
-      .toBeInTheDocument();
     expect(await screen.findByRole('button', { name: currentSectionName })).toBeInTheDocument();
     expect(await screen.findByRole('button', { name: currentSubSectionName })).toBeInTheDocument();
   });
@@ -650,7 +648,6 @@ describe('<CourseUnit />', () => {
     window.open = jest.fn();
     render(<RootWrapper />);
     const {
-      draft_preview_link: draftPreviewLink,
       published_preview_link: publishedPreviewLink,
     } = courseSectionVerticalMock;
 
@@ -660,13 +657,6 @@ describe('<CourseUnit />', () => {
     await user.click(viewLiveButton);
     expect(window.open).toHaveBeenCalled();
     expect(window.open).toHaveBeenCalledWith(publishedPreviewLink, '_blank');
-
-    const previewButton = await screen.findByRole('button', {
-      name: headerNavigationsMessages.previewButton.defaultMessage,
-    });
-    await user.click(previewButton);
-    expect(window.open).toHaveBeenCalled();
-    expect(window.open).toHaveBeenCalledWith(draftPreviewLink, '_blank');
 
     window.open = open;
   });
