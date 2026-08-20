@@ -8,13 +8,11 @@ import HeaderNavigations from './HeaderNavigations';
 import messages from './messages';
 
 const handleViewLiveFn = jest.fn();
-const handlePreviewFn = jest.fn();
 const handleEditFn = jest.fn();
 const mockSetCurrentPageKey = jest.fn();
 
 const headerNavigationsActions = {
   handleViewLive: handleViewLiveFn,
-  handlePreview: handlePreviewFn,
   handleEdit: handleEditFn,
 };
 
@@ -45,7 +43,6 @@ describe('<HeaderNavigations />', () => {
     renderComponent({ unitCategory: COURSE_BLOCK_NAMES.vertical.id });
 
     expect(screen.getByRole('button', { name: messages.viewLiveButton.defaultMessage })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: messages.previewButton.defaultMessage })).toBeInTheDocument();
   });
 
   it('calls the correct handlers when clicking buttons for unit page', async () => {
@@ -55,10 +52,6 @@ describe('<HeaderNavigations />', () => {
     const viewLiveButton = screen.getByRole('button', { name: messages.viewLiveButton.defaultMessage });
     await user.click(viewLiveButton);
     expect(handleViewLiveFn).toHaveBeenCalledTimes(1);
-
-    const previewButton = screen.getByRole('button', { name: messages.previewButton.defaultMessage });
-    await user.click(previewButton);
-    expect(handlePreviewFn).toHaveBeenCalledTimes(1);
 
     const editButton = screen.queryByRole('button', { name: messages.editButton.defaultMessage });
     expect(editButton).not.toBeInTheDocument();

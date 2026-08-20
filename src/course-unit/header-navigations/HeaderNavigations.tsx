@@ -7,7 +7,6 @@ import {
 import {
   Add,
   Edit as EditIcon,
-  FindInPage,
   InfoOutline,
 } from '@openedx/paragon/icons';
 import { COURSE_BLOCK_NAMES } from '@src/constants';
@@ -18,7 +17,6 @@ import { useUnitSidebarContext } from '../unit-sidebar/UnitSidebarContext';
 
 export type HeaderNavigationActions = {
   handleViewLive: () => void;
-  handlePreview: () => void;
   handleEdit: () => void;
 };
 
@@ -42,7 +40,6 @@ const HeaderNavigations = ({
   const intl = useIntl();
   const {
     handleViewLive,
-    handlePreview,
     handleEdit,
   } = headerNavigationsActions;
 
@@ -80,13 +77,6 @@ const HeaderNavigations = ({
             </>
           )}
           <ButtonGroup>
-            <Button
-              variant="outline-primary"
-              onClick={handlePreview}
-              iconBefore={FindInPage}
-            >
-              {intl.formatMessage(messages.previewButton)}
-            </Button>
             {/* TODO: convert to <Button as="a" href="..."> since it navigates to a URL */}
             <Button
               variant="outline-primary"
