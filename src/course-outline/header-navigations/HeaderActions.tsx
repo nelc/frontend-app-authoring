@@ -1,4 +1,8 @@
+import { useParams } from 'react-router-dom';
+import { ProgramsMetadataForm } from '@edunext/frontend-essentials';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { getConfig } from '@edx/frontend-platform';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import {
   Button,
   OverlayTrigger,
@@ -39,6 +43,7 @@ const HeaderActions = ({
 }: HeaderActionsProps) => {
   const intl = useIntl();
 
+  const { courseId } = useParams();
   const { clearSelection, open, setCurrentPageKey } = useOutlineSidebarContext();
   const { handleReIndex, lmsLink } = headerNavigationsActions;
 
@@ -123,6 +128,13 @@ const HeaderActions = ({
           {intl.formatMessage(messages.viewLiveButton)}
         </Button>
       </OverlayTrigger>
+      {courseId && (
+        <ProgramsMetadataForm
+          courseId={courseId}
+          client={getAuthenticatedHttpClient}
+          config={getConfig}
+        />
+      )}
     </Stack>
   );
 };
