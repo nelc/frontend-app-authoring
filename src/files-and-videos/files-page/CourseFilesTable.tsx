@@ -1,3 +1,4 @@
+import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { CheckboxFilter } from '@openedx/paragon';
 import { AgreementGated, UPLOAD_FILE_MAX_SIZE } from '@src/constants';
@@ -88,7 +89,7 @@ export const CourseFilesTable = () => {
     usageErrorMessages: errorMessages.usageMetrics,
     fileType: 'file',
   };
-  const maxFileSize = UPLOAD_FILE_MAX_SIZE;
+  const maxFileSize = getConfig().MAX_ASSET_UPLOAD_FILE_SIZE_IN_MB * 1024 * 1024 || UPLOAD_FILE_MAX_SIZE;
 
   const activeColumn = {
     id: 'activeStatus',
