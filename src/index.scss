@@ -32,6 +32,9 @@
 @import "optimizer-page/scan-results/ScanResults";
 @import "legacy-libraries-migration/";
 @import "container-comparison/";
+@import "@edx/brand/paragon/fonts";
+@import "@edx/brand/paragon/variables";
+@import "@edx/brand/paragon/overrides";
 
 // To apply the glow effect to the selected Section/Subsection, in the Course Outline
 div.row:has(> div > div.highlight) {
