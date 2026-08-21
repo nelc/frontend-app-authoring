@@ -1,4 +1,6 @@
+import axios from 'axios';
 import { userEvent } from '@testing-library/user-event';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import {
   fireEvent,
   initializeMocks,
@@ -10,6 +12,11 @@ import { CourseOutlineProvider, OutlineSidebarProvider } from '@src/course-outli
 import { CourseAuthoringProvider } from '@src/CourseAuthoringContext';
 import messages from './messages';
 import HeaderActions, { HeaderActionsProps } from './HeaderActions';
+
+jest.mock('@edx/frontend-platform/auth', () => ({
+  ...jest.requireActual('@edx/frontend-platform/auth'),
+  getAuthenticatedHttpClient: jest.fn(() => axios.create()),
+}));
 
 const headerNavigationsActions = {
   handleNewSection: jest.fn(),
@@ -59,6 +66,7 @@ const renderComponent = (props?: Partial<HeaderActionsProps>) =>
 
 describe('<HeaderActions />', () => {
   beforeEach(() => {
+    (getAuthenticatedHttpClient as jest.Mock).mockReturnValue(axios.create());
     initializeMocks();
   });
 
