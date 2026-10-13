@@ -39,7 +39,6 @@ import ScheduleSection from './schedule-section';
 import LearningOutcomesSection from './learning-outcomes-section';
 import InstructorsSection from './instructors-section';
 import RequirementsSection from './requirements-section';
-import LicenseSection from './license-section';
 import ScheduleSidebar from './schedule-sidebar';
 import messages from './messages';
 import { useLoadValuesPrompt, useSaveValuesPrompt } from './hooks';
@@ -61,7 +60,6 @@ const ScheduleAndDetails = ({ intl, courseId }) => {
     upgradeDeadline,
     languageOptions,
     marketingEnabled,
-    licensingEnabled,
     aboutPageEditable,
     courseDisplayName,
     sidebarHtmlEnabled,
@@ -113,7 +111,6 @@ const ScheduleAndDetails = ({ intl, courseId }) => {
     title,
     effort,
     endDate,
-    license,
     language,
     subtitle,
     overview,
@@ -318,12 +315,6 @@ const ScheduleAndDetails = ({ intl, courseId }) => {
                       isPrerequisiteCoursesEnabled={
                         isPrerequisiteCoursesEnabled
                       }
-                      onChange={handleValuesChange}
-                    />
-                  )}
-                  {licensingEnabled && (
-                    <LicenseSection
-                      license={license}
                       onChange={handleValuesChange}
                     />
                   )}
