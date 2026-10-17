@@ -21,6 +21,7 @@ import scheduleMessages from './schedule-section/messages';
 import licenseMessages from './license-section/messages';
 import genericMessages from '../generic/help-sidebar/messages';
 import messages from './messages';
+import videoMessages from './introducing-section/introduction-video/messages';
 import ScheduleAndDetails from '.';
 
 let axiosMock;
@@ -195,5 +196,29 @@ describe('<ScheduleAndDetails />', () => {
       await executeThunk(updateCourseDetailsQuery(courseId, 'DaTa'), store.dispatch);
     });
     expect(getByText(messages.alertFail.defaultMessage)).toBeInTheDocument();
+  });
+
+  describe('introduction video', () => {
+    const placeholder = videoMessages.courseIntroductionVideoPlaceholder.defaultMessage;
+
+    it('should reduce a pasted YouTube link to its ID and allow saving', async () => {
+      const { findByPlaceholderText, getByText } = render(<RootWrapper />);
+      const input = await findByPlaceholderText(placeholder);
+      fireEvent.change(input, { target: { value: 'https://youtu.be/dQw4w9WgXcQ?si=abc' } });
+
+      await waitFor(() => expect(input).toHaveValue('dQw4w9WgXcQ'));
+      expect(getByText(messages.buttonSaveText.defaultMessage).closest('button')).not.toBeDisabled();
+    });
+
+    it('should show an error and block saving for an invalid value', async () => {
+      const { findByPlaceholderText, getByText } = render(<RootWrapper />);
+      const input = await findByPlaceholderText(placeholder);
+      fireEvent.change(input, { target: { value: 'https://vimeo.com/123' } });
+
+      await waitFor(() => {
+        expect(getByText(messages.errorMessage9.defaultMessage)).toBeInTheDocument();
+      });
+      expect(getByText(messages.buttonSaveText.defaultMessage).closest('button')).toBeDisabled();
+    });
   });
 });

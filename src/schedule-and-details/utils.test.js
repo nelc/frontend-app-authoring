@@ -291,4 +291,14 @@ describe('validateScheduleAndDetails', () => {
       expect(hasExamMinimumScoreError).toBeTruthy();
     });
   });
+
+  describe('introVideo', () => {
+    it.each([[undefined], [null], [''], ['dQw4w9WgXcQ']])('accepts %s', (introVideo) => {
+      expect(validateScheduleAndDetails({ introVideo }, false, intl)).not.toHaveProperty('introVideo');
+    });
+
+    it.each([['dQw4w9WgXc'], ['dQw4w9WgXcQQ'], ['https://vimeo.com/1'], ['not a video']])('rejects %s', (introVideo) => {
+      expect(validateScheduleAndDetails({ introVideo }, false, intl)).toHaveProperty('introVideo');
+    });
+  });
 });

@@ -277,6 +277,7 @@ const ScheduleAndDetails = ({ intl, courseId }) => {
                     duration={duration}
                     subtitle={subtitle}
                     introVideo={introVideo}
+                    errorFields={errorFields}
                     description={description}
                     aboutSidebarHtml={aboutSidebarHtml}
                     shortDescription={shortDescription}

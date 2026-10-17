@@ -1,6 +1,7 @@
 import { CERTIFICATE_DISPLAY_BEHAVIOR } from './schedule-section/certificate-display-row';
 import { defaultEntranceExamMinimumScorePct } from './constants';
 import messages from './messages';
+import { isValidVideoId } from './introducing-section/introduction-video/youtubeId';
 
 const isDateBeforeOrEqual = (
   dateFormer,
@@ -28,6 +29,7 @@ const validateScheduleAndDetails = (courseDetails, canShowCertificateAvailableDa
     certificateAvailableDate,
     entranceExamMinimumScorePct,
     certificatesDisplayBehavior,
+    introVideo,
   } = courseDetails;
 
   if (!startDate) {
@@ -66,6 +68,11 @@ const validateScheduleAndDetails = (courseDetails, canShowCertificateAvailableDa
     if (Number.isNaN(number) || number < 1 || number > 100) {
       errors.entranceExamMinimumScorePct = intl.formatMessage(messages.errorMessage8);
     }
+  }
+
+  // Blank means "no video"; anything else must already be a bare, valid ID (the field normalises links).
+  if (!isValidVideoId(introVideo)) {
+    errors.introVideo = intl.formatMessage(messages.errorMessage9);
   }
 
   return errors;

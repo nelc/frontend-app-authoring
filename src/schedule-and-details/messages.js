@@ -113,6 +113,10 @@ const messages = defineMessages({
     id: 'course-authoring.schedule.schedule-section.error-message-8',
     defaultMessage: 'Please enter an integer between %(min)s and %(max)s.',
   },
+  errorMessage9: {
+    id: 'course-authoring.schedule.schedule-section.error-message-9',
+    defaultMessage: 'Enter a YouTube video ID or a link to a YouTube video, for example https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+  },
 });
 
 export default messages;
