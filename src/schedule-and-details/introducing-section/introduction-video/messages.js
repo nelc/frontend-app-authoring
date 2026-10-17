@@ -11,11 +11,11 @@ const messages = defineMessages({
   },
   courseIntroductionVideoHelpText: {
     id: 'course-authoring.schedule-section.introducing.introduction-video.help-text',
-    defaultMessage: 'Enter your YouTube video\'s ID (along with any restriction parameters)',
+    defaultMessage: 'Paste a YouTube link or video ID. A start time in the link is not supported and is dropped.',
   },
   courseIntroductionVideoPlaceholder: {
     id: 'course-authoring.schedule-section.introducing.introduction-video.placeholder',
-    defaultMessage: 'YouTube video ID',
+    defaultMessage: 'Paste a YouTube link or video ID',
   },
 });
 

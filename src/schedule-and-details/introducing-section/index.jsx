@@ -21,6 +21,7 @@ const IntroducingSection = ({
   duration,
   overview,
   introVideo,
+  errorFields,
   description,
   aboutSidebarHtml,
   shortDescription,
@@ -161,7 +162,11 @@ const IntroducingSection = ({
         </>
       )}
       {aboutPageEditable && (
-        <IntroductionVideo introVideo={introVideo} onChange={onChange} />
+        <IntroductionVideo
+          introVideo={introVideo}
+          errorFeedback={errorFields?.introVideo}
+          onChange={onChange}
+        />
       )}
     </section>
   );
@@ -173,6 +178,7 @@ IntroducingSection.defaultProps = {
   duration: '',
   description: '',
   introVideo: '',
+  errorFields: {},
   shortDescription: '',
   aboutSidebarHtml: '',
   courseImageAssetPath: '',
@@ -189,6 +195,7 @@ IntroducingSection.propTypes = {
   description: PropTypes.string,
   overview: PropTypes.string,
   introVideo: PropTypes.string,
+  errorFields: PropTypes.objectOf(PropTypes.string),
   aboutSidebarHtml: PropTypes.string,
   shortDescription: PropTypes.string,
   aboutPageEditable: PropTypes.bool.isRequired,

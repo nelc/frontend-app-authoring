@@ -4,9 +4,13 @@ import { Form, Button, Card } from '@openedx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
+import { isValidVideoId, normalizeVideoInput } from './youtubeId';
 
-const IntroductionVideo = ({ intl, introVideo, onChange }) => {
-  const embedVideoUrl = introVideo
+const IntroductionVideo = ({
+  intl, introVideo, errorFeedback, onChange,
+}) => {
+  // Preview only a valid ID, so a half-typed or rejected value never loads a broken embed.
+  const embedVideoUrl = introVideo && isValidVideoId(introVideo)
     ? `//www.youtube.com/embed/${introVideo}`
     : '';
 
@@ -33,7 +37,9 @@ const IntroductionVideo = ({ intl, introVideo, onChange }) => {
           <Form.Control
             value={introVideo || ''}
             placeholder={intl.formatMessage(messages.courseIntroductionVideoPlaceholder)}
-            onChange={(e) => onChange(e.target.value, 'introVideo')}
+            isInvalid={!!errorFeedback}
+            // A pasted link is reduced to its video ID right here.
+            onChange={(e) => onChange(normalizeVideoInput(e.target.value), 'introVideo')}
           />
           <Button
             variant="outline-primary"
@@ -44,6 +50,11 @@ const IntroductionVideo = ({ intl, introVideo, onChange }) => {
           </Button>
         </Card.Footer>
       </Card>
+      {errorFeedback ? (
+        <Form.Control.Feedback type="invalid" hasIcon={false}>
+          {errorFeedback}
+        </Form.Control.Feedback>
+      ) : null}
       <Form.Control.Feedback>
         {intl.formatMessage(messages.courseIntroductionVideoHelpText)}
       </Form.Control.Feedback>
@@ -53,11 +64,13 @@ const IntroductionVideo = ({ intl, introVideo, onChange }) => {
 
 IntroductionVideo.defaultProps = {
   introVideo: '',
+  errorFeedback: '',
 };
 
 IntroductionVideo.propTypes = {
   intl: intlShape.isRequired,
   introVideo: PropTypes.string,
+  errorFeedback: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
