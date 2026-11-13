@@ -83,6 +83,7 @@ const AddComponent = ({
     switch (type) {
       case COMPONENT_TYPES.discussion:
       case COMPONENT_TYPES.dragAndDrop:
+      case COMPONENT_TYPES.vclassroom:
         handleCreateNewCourseXBlock({ type, parentLocator: blockId });
         break;
       case COMPONENT_TYPES.problem:

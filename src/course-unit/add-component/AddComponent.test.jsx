@@ -168,6 +168,38 @@ describe('<AddComponent />', () => {
     });
   });
 
+  it('creates a virtual classroom block when the CMS offers it as its own button', async () => {
+    axiosMock
+      .onGet(getCourseSectionVerticalApiUrl(blockId))
+      .reply(200, {
+        ...courseSectionVerticalMock,
+        component_templates: [
+          {
+            type: COMPONENT_TYPES.vclassroom,
+            templates: [{
+              display_name: 'Virtual Classroom', category: 'vclassroom', boilerplate_name: null, hinted: false, tab: 'common', support_level: true,
+            }],
+            display_name: 'Virtual Classroom',
+            support_legend: {},
+            beta: false,
+          },
+        ],
+      });
+    await executeThunk(fetchCourseSectionVerticalData(blockId), store.dispatch);
+
+    const { getByRole } = renderComponent();
+
+    userEvent.click(getByRole('button', {
+      name: new RegExp(`${messages.buttonText.defaultMessage} Virtual Classroom`, 'i'),
+    }));
+    expect(handleCreateNewCourseXBlockMock).toHaveBeenCalledWith({
+      parentLocator: '123',
+      type: COMPONENT_TYPES.vclassroom,
+    });
+    // the suite shares this mock; the next test asserts it was never called
+    handleCreateNewCourseXBlockMock.mockClear();
+  });
+
   it('handleCreateNewCourseXblock does\'t call with custom component create button is clicked', async () => {
     axiosMock
       .onGet(getCourseSectionVerticalApiUrl(blockId))

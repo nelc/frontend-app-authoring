@@ -4,6 +4,7 @@ import {
   BookOpen as BookOpenIcon,
   Casino as ProblemBankIcon,
   ContentPaste as ContentPasteIcon,
+  CoPresent as CoPresentIcon,
   Edit as EditIcon,
   EditNote as EditNoteIcon,
   CalendarViewDay,
@@ -31,6 +32,7 @@ export const COMPONENT_TYPES = {
   problem: 'problem',
   video: 'video',
   dragAndDrop: 'drag-and-drop-v2',
+  vclassroom: 'vclassroom', // NELC: the virtual classroom XBlock, offered by the CMS as its own button
 };
 
 export const UNIT_TYPE_ICONS_MAP: Record<string, React.ComponentType> = {
@@ -52,6 +54,7 @@ export const COMPONENT_TYPE_ICON_MAP: Record<string, React.ComponentType> = {
   [COMPONENT_TYPES.problem]: HelpOutlineIcon,
   [COMPONENT_TYPES.video]: VideoCameraIcon,
   [COMPONENT_TYPES.dragAndDrop]: BackHandIcon,
+  [COMPONENT_TYPES.vclassroom]: CoPresentIcon,
 };
 
 export const STRUCTURAL_TYPE_ICONS: Record<string, React.ComponentType> = {
@@ -73,6 +76,7 @@ export const COMPONENT_TYPE_STYLE_COLOR_MAP = {
   [COMPONENT_TYPES.problem]: 'component-style-default',
   [COMPONENT_TYPES.video]: 'component-style-video',
   [COMPONENT_TYPES.dragAndDrop]: 'component-style-default',
+  [COMPONENT_TYPES.vclassroom]: 'component-style-default',
   vertical: 'component-style-vertical',
   unit: 'component-style-vertical',
   sequential: 'component-style-default',
